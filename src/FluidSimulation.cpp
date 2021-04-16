@@ -26,8 +26,8 @@ void FluidSimulation::restart() {
 
 void FluidSimulation::update() {
 	_flipflop = !_flipflop;
-	_compute_shader.get().bind();
-	_compute_shader.get().setUniform1i("u_bFlipFlop", _flipflop);
+	_compute_shader->bind();
+	_compute_shader->set_uniform("u_bFlipFlop", _flipflop);
 	_compute_shader.compute(_width, _height);
 }
 
@@ -35,10 +35,10 @@ void FluidSimulation::render() {
 	_renderer.begin();
 	{
 		_shader.bind();
-		_shader.setUniform2f("u_resolution", { _width, _height });
-		_shader.setUniform1i("u_resolutionX", _width);
-		_shader.setUniform1i("u_resolutionY", _height);
-		_shader.setUniform1i("u_bFlipFlop", _flipflop);
+		_shader.set_uniform("u_resolution", { _width, _height });
+		_shader.set_uniform("u_resolutionX", _width);
+		_shader.set_uniform("u_resolutionY", _height);
+		_shader.set_uniform("u_bFlipFlop", _flipflop);
 		_renderer.render();
 	}
 	_renderer.end(GL_NEAREST);

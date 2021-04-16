@@ -14,7 +14,6 @@ public:
 	void restart();
 	void update();
 	void render();
-	void renderToConsole();
 	void ImGui();
 	inline Renderer_Fullscreen& renderer() { return _renderer; }
 
