@@ -7,14 +7,14 @@
 uniform bool u_bFlipFlop;
 
 layout(std430, binding=0) buffer myBuffer0 {
-   int data0[];
+   float data0[];
 };
 
 layout(std430, binding=1) buffer myBuffer1 {
-   int data1[];
+   float data1[];
 };
 
-int sampleGrid(int x, int y) {
+float sampleGrid(int x, int y) {
     if (x < 0 || x >= NumberOfComputationsX ||
         y < 0 || y >= NumberOfComputationsY)
     {
@@ -25,7 +25,7 @@ int sampleGrid(int x, int y) {
         : data0[x + y * NumberOfComputationsX];
 }
 
-void setGrid(int x, int y, int value) {
+void setGrid(int x, int y, float value) {
     if (u_bFlipFlop)
         data0[x + y * NumberOfComputationsX] = value;
     else
@@ -35,31 +35,31 @@ void setGrid(int x, int y, int value) {
 void cool_main() {
     int idX = int(gl_GlobalInvocationID.x);
     int idY = int(gl_GlobalInvocationID.y);
-    int nbAliveNeighbours =
-        sampleGrid(idX + 1, idY + 1) +
-        sampleGrid(idX + 1, idY + 0) +
-        sampleGrid(idX + 1, idY - 1) +
-        sampleGrid(idX + 0, idY + 1) +
-        sampleGrid(idX + 0, idY - 1) +
-        sampleGrid(idX - 1, idY + 1) +
-        sampleGrid(idX - 1, idY + 0) +
-        sampleGrid(idX - 1, idY - 1);
-    int state = sampleGrid(idX, idY);
-
-    if (state == 0) {
-        // Dead
-        if (nbAliveNeighbours == 3)
-            setGrid(idX, idY, 1);
-        else {
-            setGrid(idX, idY, 0);
-        }
-    }
-    else {
-        // Alive
-        if (nbAliveNeighbours == 2 || nbAliveNeighbours == 3)
-            setGrid(idX, idY, 1);
-        else {
-            setGrid(idX, idY, 0);
-        }
-    }
+    //int nbAliveNeighbours =
+    //    sampleGrid(idX + 1, idY + 1) +
+    //    sampleGrid(idX + 1, idY + 0) +
+    //    sampleGrid(idX + 1, idY - 1) +
+    //    sampleGrid(idX + 0, idY + 1) +
+    //    sampleGrid(idX + 0, idY - 1) +
+    //    sampleGrid(idX - 1, idY + 1) +
+    //    sampleGrid(idX - 1, idY + 0) +
+    //    sampleGrid(idX - 1, idY - 1);
+    //int state = sampleGrid(idX, idY);
+    //
+    //if (state == 0) {
+    //    // Dead
+    //    if (nbAliveNeighbours == 3)
+    //        setGrid(idX, idY, 1);
+    //    else {
+    //        setGrid(idX, idY, 0);
+    //    }
+    //}
+    //else {
+    //    // Alive
+    //    if (nbAliveNeighbours == 2 || nbAliveNeighbours == 3)
+    //        setGrid(idX, idY, 1);
+    //    else {
+    //        setGrid(idX, idY, 0);
+    //    }
+    //}
 }

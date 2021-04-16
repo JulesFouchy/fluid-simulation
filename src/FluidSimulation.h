@@ -20,8 +20,8 @@ public:
 private:
 	unsigned int _width;
 	unsigned int _height;
-	SSBO<int> _ssbo0; // We use two SSBOs to write in one of them while we read the other
-	SSBO<int> _ssbo1;
+	SSBO<float> _ssbo0; // We use two SSBOs to write in one of them while we read the other
+	SSBO<float> _ssbo1;
 	ComputeShader<16, 16, 1> _compute_shader;
 	bool _flipflop = false;
 

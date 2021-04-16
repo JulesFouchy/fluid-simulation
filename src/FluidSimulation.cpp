@@ -14,11 +14,14 @@ FluidSimulation::FluidSimulation(unsigned int width, unsigned int height)
 }
 
 void FluidSimulation::restart() {
-	std::vector<int> v;
+	std::vector<float> v;
 	size_t N = _width * _height;
 	v.reserve(N);
-	for (size_t i = 0; i < N; ++i) {
-		v.push_back(Random::get0to1() < 0.5 ? 0 : 1);
+	for (int x = 0; x < _width; ++x) {
+		for (int y = 0; y < _height; ++y) {
+			float d = sqrt((x - _width / 2) * (x - _width / 2) + (y - _height / 2) * (y - _height / 2)) / _height * 2.f;
+			v.push_back(exp(-d*d * 15.f));
+		}
 	}
 	_ssbo0.upload_data(v);
 	_ssbo1.upload_data(v);
