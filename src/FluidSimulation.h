@@ -16,16 +16,16 @@ public:
 	void render();
 	void renderToConsole();
 	void ImGui();
-	inline Renderer_Fullscreen& renderer() { return m_renderer; }
+	inline Renderer_Fullscreen& renderer() { return _renderer; }
 
 private:
-	unsigned int m_width;
-	unsigned int m_height;
-	SSBO<int> m_ssbo0; // We use two SSBOs to write in one of them while we read the other
-	SSBO<int> m_ssbo1;
-	ComputeShader<16, 16, 1> m_computeShader;
-	bool m_bFlipFlop = false;
+	unsigned int _width;
+	unsigned int _height;
+	SSBO<int> _ssbo0; // We use two SSBOs to write in one of them while we read the other
+	SSBO<int> _ssbo1;
+	ComputeShader<16, 16, 1> _compute_shader;
+	bool _flipflop = false;
 
-	Renderer_Fullscreen m_renderer;
-	Shader m_shader;
+	Renderer_Fullscreen _renderer;
+	Shader _shader;
 };

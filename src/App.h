@@ -17,12 +17,12 @@ public:
 
 private:
 	FluidSimulation _fluid_simulation;
-	float m_updateSpeed = 30.f;
-	int m_frameCount = 0;
+	float _update_speed = 30.f;
+	int _frame_count = 0;
 
 private:
 #ifndef NDEBUG
-	bool m_bShow_Debug = true;
-	bool m_bShow_ImGuiDemo = false;
+	bool _show_debug = true;
+	bool _show_ImGuiDemo = false;
 #endif
 };

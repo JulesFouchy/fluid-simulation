@@ -4,8 +4,8 @@
 #include <Cool/App/RenderState.h>
 
 FluidSimulation::FluidSimulation(unsigned int width, unsigned int height)
-	: m_width(width), m_height(height), m_ssbo0(0), m_ssbo1(1), m_computeShader("shaders/simulation.comp"),
-	  m_shader({
+	: _width(width), _height(height), _ssbo0(0), _ssbo1(1), _compute_shader("shaders/simulation.comp"),
+	  _shader({
 		ShaderCode(ShaderType::Vertex, "Cool/Renderer_Fullscreen/fullscreen.vert"),
 		ShaderCode(ShaderType::Fragment, "shaders/rendering.frag")
 	  })
@@ -15,33 +15,33 @@ FluidSimulation::FluidSimulation(unsigned int width, unsigned int height)
 
 void FluidSimulation::restart() {
 	std::vector<int> v;
-	size_t N = m_width * m_height;
+	size_t N = _width * _height;
 	v.reserve(N);
 	for (size_t i = 0; i < N; ++i) {
 		v.push_back(Random::get0to1() < 0.5 ? 0 : 1);
 	}
-	m_ssbo0.uploadData(v);
-	m_ssbo1.uploadData(v);
+	_ssbo0.uploadData(v);
+	_ssbo1.uploadData(v);
 }
 
 void FluidSimulation::update() {
-	m_bFlipFlop = !m_bFlipFlop;
-	m_computeShader.get().bind();
-	m_computeShader.get().setUniform1i("u_bFlipFlop", m_bFlipFlop);
-	m_computeShader.compute(m_width, m_height);
+	_flipflop = !_flipflop;
+	_compute_shader.get().bind();
+	_compute_shader.get().setUniform1i("u_bFlipFlop", _flipflop);
+	_compute_shader.compute(_width, _height);
 }
 
 void FluidSimulation::render() {
-	m_renderer.begin();
+	_renderer.begin();
 	{
-		m_shader.bind();
-		m_shader.setUniform2f("u_resolution", { m_width, m_height });
-		m_shader.setUniform1i("u_resolutionX", m_width);
-		m_shader.setUniform1i("u_resolutionY", m_height);
-		m_shader.setUniform1i("u_bFlipFlop", m_bFlipFlop);
-		m_renderer.render();
+		_shader.bind();
+		_shader.setUniform2f("u_resolution", { _width, _height });
+		_shader.setUniform1i("u_resolutionX", _width);
+		_shader.setUniform1i("u_resolutionY", _height);
+		_shader.setUniform1i("u_bFlipFlop", _flipflop);
+		_renderer.render();
 	}
-	m_renderer.end(GL_NEAREST);
+	_renderer.end(GL_NEAREST);
 }
 
 void FluidSimulation::ImGui() {

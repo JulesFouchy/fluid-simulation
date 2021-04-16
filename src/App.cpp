@@ -29,13 +29,13 @@ void exportFramebuffer(FrameBuffer& frameBuffer, const char* filepath) {
 
 void App::update() {
 	_fluid_simulation.render();
-	//exportFramebuffer(m_gameOfLife.renderer().renderBuffer(), (File::RootDir + "/export/" + String::ToString(m_frameCount, 5) + ".png").c_str());
-	//m_frameCount++;
+	//exportFramebuffer(m_gameOfLife.renderer().renderBuffer(), (File::RootDir + "/export/" + String::ToString(_frame_count, 5) + ".png").c_str());
+	//_frame_count++;
 	//m_gameOfLife.update();
 	static auto timeOfLastUpdate = std::chrono::steady_clock::now();
 	auto now = std::chrono::steady_clock::now();
 	std::chrono::duration<float> elapsedTime = now - timeOfLastUpdate;
-	if (elapsedTime.count() > 1.f / m_updateSpeed) {
+	if (elapsedTime.count() > 1.f / _update_speed) {
 		_fluid_simulation.update();
 		timeOfLastUpdate = now;
 	}
@@ -43,17 +43,17 @@ void App::update() {
 
 void App::ImGuiWindows() {
 #ifndef NDEBUG
-	if (m_bShow_Debug) {
-		ImGui::Begin("Debug", &m_bShow_Debug);
+	if (_show_debug) {
+		ImGui::Begin("Debug", &_show_debug);
 		ImGui::Text("Application average %.1f FPS", ImGui::GetIO().Framerate);
-		ImGui::Checkbox("Show Demo Window", &m_bShow_ImGuiDemo);
+		ImGui::Checkbox("Show Demo Window", &_show_ImGuiDemo);
 		ImGui::End();
 	}
-	if (m_bShow_ImGuiDemo) // Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-		ImGui::ShowDemoWindow(&m_bShow_ImGuiDemo);
+	if (_show_ImGuiDemo) // Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+		ImGui::ShowDemoWindow(&_show_ImGuiDemo);
 #endif
 	ImGui::Begin("Game of Life");
-	ImGui::SliderFloat("Simulation Speed", &m_updateSpeed, 0.f, 60.f);
+	ImGui::SliderFloat("Simulation Speed", &_update_speed, 0.f, 60.f);
 	_fluid_simulation.ImGui();
 	if (ImGui::Button("Restart"))
 		_fluid_simulation.restart();
