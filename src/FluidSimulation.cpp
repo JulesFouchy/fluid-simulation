@@ -20,8 +20,8 @@ void FluidSimulation::restart() {
 	for (size_t i = 0; i < N; ++i) {
 		v.push_back(Random::get0to1() < 0.5 ? 0 : 1);
 	}
-	_ssbo0.uploadData(v);
-	_ssbo1.uploadData(v);
+	_ssbo0.upload_data(v);
+	_ssbo1.upload_data(v);
 }
 
 void FluidSimulation::update() {
