@@ -14,7 +14,6 @@ public:
 	void update() override;
 	void ImGuiWindows() override;
 	void ImGuiMenus() override;
-	void onEvent(const SDL_Event & e) override;
 
 private:
 	GameOfLife m_gameOfLife;
