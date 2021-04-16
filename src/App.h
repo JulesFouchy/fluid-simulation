@@ -2,7 +2,7 @@
 
 #include <Cool/App/IApp.h>
 
-#include "GameOfLife.h"
+#include "FluidSimulation.h"
 
 using namespace Cool;
 
@@ -16,7 +16,7 @@ public:
 	void ImGuiMenus() override;
 
 private:
-	GameOfLife m_gameOfLife;
+	FluidSimulation _fluid_simulation;
 	float m_updateSpeed = 30.f;
 	int m_frameCount = 0;
 

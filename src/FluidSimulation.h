@@ -6,10 +6,10 @@
 
 using namespace Cool;
 
-class GameOfLife {
+class FluidSimulation {
 public:
-	GameOfLife(unsigned int width, unsigned int height);
-	~GameOfLife() = default;
+	FluidSimulation(unsigned int width, unsigned int height);
+	~FluidSimulation() = default;
 
 	void restart();
 	void update();
@@ -28,8 +28,4 @@ private:
 
 	Renderer_Fullscreen m_renderer;
 	Shader m_shader;
-	float m_cellRoundness = 1.972f;
-	float m_cellThreshold = 0.367;
-	float m_cellBlur = 0.367f;
-	int m_cellGen = 3;
 };
