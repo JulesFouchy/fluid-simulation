@@ -15,6 +15,8 @@ layout(std430, binding=1) buffer myBuffer1 {
 };
 
 float sampleGrid(int x, int y) {
+    x += int(gl_GlobalInvocationID.x);
+    y += int(gl_GlobalInvocationID.y);
     if (x < 0 || x >= NumberOfComputationsX ||
         y < 0 || y >= NumberOfComputationsY)
     {
@@ -25,41 +27,23 @@ float sampleGrid(int x, int y) {
         : data0[x + y * NumberOfComputationsX];
 }
 
-void setGrid(int x, int y, float value) {
+void setGrid(float value) {
+    int x = int(gl_GlobalInvocationID.x);
+    int y = int(gl_GlobalInvocationID.y);
     if (u_bFlipFlop)
         data0[x + y * NumberOfComputationsX] = value;
     else
         data1[x + y * NumberOfComputationsX] = value;
 }
 
+void density_diffusion() {
+    float d0 = sampleGrid(0, 0);
+    float d1 = sampleGrid(+1, 0);
+    float d2 = sampleGrid(-1, 0);
+    float d3 = sampleGrid(0, +1);
+    float d4 = sampleGrid(0, -1);
+}
+
 void cool_main() {
-    int idX = int(gl_GlobalInvocationID.x);
-    int idY = int(gl_GlobalInvocationID.y);
-    //int nbAliveNeighbours =
-    //    sampleGrid(idX + 1, idY + 1) +
-    //    sampleGrid(idX + 1, idY + 0) +
-    //    sampleGrid(idX + 1, idY - 1) +
-    //    sampleGrid(idX + 0, idY + 1) +
-    //    sampleGrid(idX + 0, idY - 1) +
-    //    sampleGrid(idX - 1, idY + 1) +
-    //    sampleGrid(idX - 1, idY + 0) +
-    //    sampleGrid(idX - 1, idY - 1);
-    //int state = sampleGrid(idX, idY);
-    //
-    //if (state == 0) {
-    //    // Dead
-    //    if (nbAliveNeighbours == 3)
-    //        setGrid(idX, idY, 1);
-    //    else {
-    //        setGrid(idX, idY, 0);
-    //    }
-    //}
-    //else {
-    //    // Alive
-    //    if (nbAliveNeighbours == 2 || nbAliveNeighbours == 3)
-    //        setGrid(idX, idY, 1);
-    //    else {
-    //        setGrid(idX, idY, 0);
-    //    }
-    //}
+    density_diffusion();
 }
